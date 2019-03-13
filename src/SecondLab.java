@@ -93,10 +93,6 @@ public class SecondLab {
                 result[i] += marks[i][j];
             }
         }
-        int rez = 0;
-        for (int i=0;i<result.length;i++){
-            rez +=result[i];
-        }
         return result;
     }
 
