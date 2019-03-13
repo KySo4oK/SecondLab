@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SecondLab {
-    private static ArrayList<String> eurovision = new ArrayList();
+    private static ArrayList<String> namesOfCountries = new ArrayList();
+    private static String nameOfInputFile = "eurovision.csv";
     private static int numberOfCountries;
 
 
@@ -21,7 +22,7 @@ public class SecondLab {
         String[] wordsForCurrLine;
         for (int i = 0; i < lines.size(); i++) {
             wordsForCurrLine = lines.get(i).split(",");
-            eurovision.add(wordsForCurrLine[0]);
+            namesOfCountries.add(wordsForCurrLine[0]);
             for (int j = 1; j < wordsForCurrLine.length; j++) {
                 votes[i][j - 1] = Integer.parseInt(wordsForCurrLine[j]);
             }
@@ -31,7 +32,7 @@ public class SecondLab {
 
     public static ArrayList<String> readAndSplitToLines() {
         ArrayList<String> lines = new ArrayList<>();
-        try (Reader reader = new FileReader("eurovision.csv")) {
+        try (Reader reader = new FileReader(nameOfInputFile)) {
             Scanner scanner = new Scanner(reader);
 
             numberOfCountries = scanner.nextInt();
@@ -83,17 +84,17 @@ public class SecondLab {
                 imax = 0;
             }
         }
-        int [] rezult = new int[numberOfCountries];
+        int[] result = new int[numberOfCountries];
         for (int i = 0; i < numberOfCountries; i++) {
             for (int j = 0; j < numberOfCountries; j++) {
-                rezult[i] += marks[i][j];
+                result[i] += marks[i][j];
             }
         }
         int rez = 0;
-        for (int i=0;i<rezult.length;i++){
-            rez +=rezult[i];
+        for (int i = 0; i < result.length; i++) {
+            rez += result[i];
         }
-        return rezult;
+        return result;
     }
 
     public static int[][] fillZeros() {
@@ -107,7 +108,7 @@ public class SecondLab {
     }
 
     public static void findWinnersAndPrint(int[] rezult) {
-        try (FileWriter writer = new FileWriter("rezults.csv")){
+        try (FileWriter writer = new FileWriter("rezults.csv")) {
 
             int max = rezult[0];
             int imax = 0;
@@ -119,7 +120,7 @@ public class SecondLab {
                     }
                 }
                 rezult[imax] = 0;
-                writer.write(k + "." + eurovision.get(imax) + "," + max + "\r\n");
+                writer.write(k + "." + namesOfCountries.get(imax) + "," + max + "\r\n");
                 max = 0;
                 imax = 0;
             }
