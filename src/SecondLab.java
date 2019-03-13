@@ -87,17 +87,17 @@ public class SecondLab {
                 imax = 0;
             }
         }
-        int [] rezult = new int[numberOfCountries];
+        int [] result = new int[numberOfCountries];
         for (int i = 0; i < numberOfCountries; i++) {
             for (int j = 0; j < numberOfCountries; j++) {
-                rezult[i] += marks[i][j];
+                result[i] += marks[i][j];
             }
         }
         int rez = 0;
-        for (int i=0;i<rezult.length;i++){
-            rez +=rezult[i];
+        for (int i=0;i<result.length;i++){
+            rez +=result[i];
         }
-        return rezult;
+        return result;
     }
 
     public static int[][] fillZeros() {
