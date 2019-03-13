@@ -10,6 +10,7 @@ public class SecondLab {
     private final static String nameOfOutPutFile = "results.csv";
     private static int numberOfCountries;
     private static int[][] marks;
+    private static Scanner scanner = new Scanner(System.in);
 
     /* (Kate Gricaenko)
      methods for extra credit:
@@ -18,59 +19,75 @@ public class SecondLab {
        findWinnersForExtraCredit - find winners and output it`s list to console*/
 
     public static void main(String[] args) {
-        int[][] votes = fillList();
-        int[] result = votesToResult(votes);
-        findWinnersAndPrint(result);
+        System.out.println("Do you want work with file or with console?");// interface to work with program
+        String line = scanner.nextLine();
+        if (line.equalsIgnoreCase("file")) {
+            int[][] votes = fillList();
+            int[] result = votesToResult(votes);
+            findWinnersAndPrint(result);
+        } else {
+            if (line.equalsIgnoreCase("console")) {
+                findWinnersForExtraCredit();
+            } else {
+                System.out.println("Incorrect input!!!");
+            }
+        }
+
     }
 
     public static void readMarksFromConsole() { // method for extra credit
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter number of countries for your eurovision: ");
-        numberOfCountries = scanner.nextInt();
-        marks = new int[numberOfCountries][numberOfCountries];
-        for (int i = 0; i < numberOfCountries; i++) {
-            System.out.println("Enter current country: ");
-            namesOfCountries.add(scanner.nextLine());
-            for (int j = 0; j < numberOfCountries; j++) {
-                if (j != i) {
-                    System.out.println(" Enter current mark: ");
-                    marks[i][j] = scanner.nextInt();
-                }
-                else {
-                    marks[i][j] = 0;
+        numberOfCountries = Integer.parseInt(scanner.nextLine());
+        if (numberOfCountries < 3) {
+            System.out.println("Eurovision has just canceled");
+        } else {
+            String country;
+            marks = new int[numberOfCountries][numberOfCountries];
+            for (int i = 0; i < numberOfCountries; i++) {
+                System.out.println("Enter current country: ");
+                country = scanner.nextLine();
+                namesOfCountries.add(country);
+                for (int j = 0; j < numberOfCountries; j++) {
+                    if (j != i) {
+                        System.out.println(" Enter current mark: ");
+                        marks[i][j] = Integer.parseInt(scanner.nextLine());
+                    } else {
+                        marks[i][j] = 0;
+                    }
                 }
             }
         }
     }
 
-    public static int[] calculateSumForEveryCountry(){
-        int [] result = new int[numberOfCountries];
+    public static int[] calculateSumForEveryCountry() {
+        int[] result = new int[numberOfCountries];
         for (int i = 0; i < numberOfCountries; i++) {
             result[i] = marks[i][0];
-            for (int j = 1; j < numberOfCountries ; j++) {
-                result[i]+=marks[i][j];
+            for (int j = 1; j < numberOfCountries; j++) {
+                result[i] += marks[i][j];
             }
 
         }
         return result;
     }
 
-    public static void findWinnersForExtraCredit(){
+    public static void findWinnersForExtraCredit() {
         readMarksFromConsole();
         int[] finalMarks = calculateSumForEveryCountry();
-        int prevMaximum = finalMarks[0];
-        int maximum = finalMarks[0];
         int id = 0;
 
         for (int i = 1; i <= 3; i++) {
-            for (int j = 0; j < finalMarks.length ; j++) {
-                if(maximum < finalMarks[j] && finalMarks[j] <=prevMaximum){
+            int maximum = 0;
+            for (int j = 0; j < finalMarks.length; j++) {
+
+                if (maximum < finalMarks[j]) {
                     maximum = finalMarks[j];
                     id = j;
                 }
+
             }
+            finalMarks[id] = 0;
             System.out.println(i + ". " + namesOfCountries.get(id) + " balls: " + maximum);
-            prevMaximum = maximum;
 
         }
 
