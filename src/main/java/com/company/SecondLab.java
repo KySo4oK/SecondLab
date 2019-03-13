@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class SecondLab {
     private static ArrayList<String> namesOfCountries = new ArrayList();
     private static String nameOfInputFile = "eurovision.csv";
+    private static String nameOfOutPutFile = "results.csv";
     private static int numberOfCountries;
 
 
@@ -90,10 +91,6 @@ public class SecondLab {
                 result[i] += marks[i][j];
             }
         }
-        int rez = 0;
-        for (int i = 0; i < result.length; i++) {
-            rez += result[i];
-        }
         return result;
     }
 
@@ -108,21 +105,21 @@ public class SecondLab {
     }
 
     public static void findWinnersAndPrint(int[] rezult) {
-        try (FileWriter writer = new FileWriter("rezults.csv")) {
+        try (FileWriter writer = new FileWriter(nameOfOutPutFile)) {
 
             int max = rezult[0];
-            int imax = 0;
+            int id_max = 0;
             for (int k = 1; k <= 10; k++) {
                 for (int i = 0; i < numberOfCountries; i++) {
                     if (rezult[i] > max) {
                         max = rezult[i];
-                        imax = i;
+                        id_max = i;
                     }
                 }
-                rezult[imax] = 0;
-                writer.write(k + "." + namesOfCountries.get(imax) + "," + max + "\r\n");
+                rezult[id_max] = 0;
+                writer.write(k + "." + namesOfCountries.get(id_max) + "," + max + "\r\n");
                 max = 0;
-                imax = 0;
+                id_max = 0;
             }
         } catch (IOException e1) {
             e1.printStackTrace();
