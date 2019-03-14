@@ -27,7 +27,11 @@ public class SecondLab {
             wordsForCurrLine = lines.get(i).split(",");
             eurovision.add(wordsForCurrLine[0]);
             for (int j = 1; j < wordsForCurrLine.length; j++) {
-                votes[i][j - 1] = Integer.parseInt(wordsForCurrLine[j]);
+                if(wordsForCurrLine[j].charAt(0)!='-') {
+                    votes[i][j - 1] = Integer.parseInt(wordsForCurrLine[j]);
+                } else {
+                    votes[i][j - 1] = 0;
+                }
             }
         }
         return votes;
